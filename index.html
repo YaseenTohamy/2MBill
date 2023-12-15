@@ -128,36 +128,57 @@
 <body>
   <div class="container">
     <h1>2M Company</h1>
-    <div id="bill-container">
-      <h2>2M Company</h2>
-      <label for="product">المنتج:</label>
-      <input type="text" id="product" placeholder="أدخل اسم المنتج">
+<!-- ... (existing code) ... -->
 
-      <label for="price">السعر:</label>
-      <input type="number" id="price" placeholder="أدخل سعر المنتج">
+<div id="bill-container">
+  <h2>2M Company</h2>
+  <label for="product">المنتج:</label>
+  <input type="text" id="product" placeholder="أدخل اسم المنتج">
 
-      <button onclick="addItem()">إضافة المنتج</button>
+  <label for="price">السعر:</label>
+  <input type="number" id="price" placeholder="أدخل سعر المنتج">
 
-      <table id="item-table">
-        <thead>
-          <tr>
-            <th>المنتج</th>
-            <th>السعر</th>
-          </tr>
-        </thead>
-        <tbody id="item-list"></tbody>
-      </table>
+  <!-- Number Section -->
+  <div class="number-section">
+    <label for="number">الرقم:</label>
+    <input type="text" id="number" placeholder="أدخل الرقم">
+  </div>
 
-      <div class="delivery-section">
-        <label class="delivery-label" for="delivery">تكلفة التوصيل:</label>
-        <input class="delivery-input" type="number" id="delivery" placeholder="أدخل تكلفة التوصيل">
-      </div>
+  <!-- Address Section -->
+  <div class="address-section">
+    <label for="address">العنوان:</label>
+    <input type="text" id="address" placeholder="أدخل العنوان">
+  </div>
+  <!-- End of new sections -->
 
-      <div id="total-container">
-        <p>إجمالي المنتجات: <span id="total-products">0</span></p>
-        <p>التوصيل: EGP <span id="total-delivery">0.00</span></p>
-        <p>الإجمالي: EGP <span id="total-amount">0.00</span></p>
-      </div>
+  <button onclick="addItem()">إضافة المنتج</button>
+
+  <table id="item-table">
+    <thead>
+      <tr>
+        <th>المنتج</th>
+        <th>السعر</th>
+      </tr>
+    </thead>
+    <tbody id="item-list"></tbody>
+  </table>
+
+  <div class="delivery-section">
+    <label class="delivery-label" for="delivery">تكلفة التوصيل:</label>
+    <input class="delivery-input" type="number" id="delivery" placeholder="أدخل تكلفة التوصيل">
+  </div>
+
+  <div id="total-container">
+    <p>إجمالي المنتجات: <span id="total-products">0</span></p>
+    <p>التوصيل: EGP <span id="total-delivery">0.00</span></p>
+    <p>الإجمالي: EGP <span id="total-amount">0.00</span></p>
+  </div>
+
+  <button onclick="printBill()">طباعة الفاتورة</button>
+</div>
+
+<!-- ... (existing code) ... -->
+
 
       <button onclick="printBill()">طباعة الفاتورة</button>
     </div>
