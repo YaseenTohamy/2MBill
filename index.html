@@ -69,17 +69,24 @@
       color: #fff;
     }
 
-    .delivery-section {
+    .delivery-section,
+    .number-section,
+    .address-section {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-top: 20px;
     }
 
-    .delivery-label {
+    .delivery-label,
+    .number-label,
+    .address-label {
       font-size: 16px;
     }
 
-    .delivery-input {
+    .delivery-input,
+    .number-input,
+    .address-input {
       width: 50%;
       padding: 8px;
       font-size: 14px;
@@ -92,8 +99,7 @@
 
     @media print {
       label,
-      #product,
-      #price,
+      input,
       button {
         display: none;
       }
@@ -118,8 +124,70 @@
         font-size: 18px;
       }
 
-      .delivery-section {
-        display: none;
+      .delivery-section,
+      .number-section,
+      .address-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .delivery-label,
+      .number-label,
+      .address-label {
+        font-size: 16px;
+      }
+
+      .delivery-input,
+      .number-input,
+      .address-input {
+        width: 50%;
+        padding: 8px;
+        font-size: 14px;
+      }
+
+      .number-section,
+      .address-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .number-label,
+      .address-label {
+        font-size: 16px;
+      }
+
+      .number-input,
+      .address-input {
+        width: 50%;
+        padding: 8px;
+        font-size: 14px;
+      }
+
+      .delivery-section,
+      .number-section,
+      .address-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .delivery-label,
+      .number-label,
+      .address-label {
+        font-size: 16px;
+      }
+
+      .delivery-input,
+      .number-input,
+      .address-input {
+        width: 50%;
+        padding: 8px;
+        font-size: 14px;
       }
     }
   </style>
@@ -130,11 +198,27 @@
     <h1>2M Company</h1>
     <div id="bill-container">
       <h2>2M Company</h2>
+
+      <!-- Product and Price Section -->
       <label for="product">المنتج:</label>
       <input type="text" id="product" placeholder="أدخل اسم المنتج">
 
       <label for="price">السعر:</label>
       <input type="number" id="price" placeholder="أدخل سعر المنتج">
+      <!-- End of Product and Price Section -->
+
+      <!-- Number Section -->
+      <div class="number-section">
+        <label class="number-label" for="number">الرقم:</label>
+        <input class="number-input" type="text" id="number" placeholder="أدخل الرقم">
+      </div>
+
+      <!-- Address Section -->
+      <div class="address-section">
+        <label class="address-label" for="address">العنوان:</label>
+        <input class="address-input" type="text" id="address" placeholder="أدخل العنوان">
+      </div>
+      <!-- End of new sections -->
 
       <button onclick="addItem()">إضافة المنتج</button>
 
@@ -157,6 +241,10 @@
         <p>إجمالي المنتجات: <span id="total-products">0</span></p>
         <p>التوصيل: EGP <span id="total-delivery">0.00</span></p>
         <p>الإجمالي: EGP <span id="total-amount">0.00</span></p>
+
+        <!-- Show number and address in the printed version -->
+        <p>الرقم: <span id="printed-number"></span></p>
+        <p>العنوان: <span id="printed-address"></span></p>
       </div>
 
       <button onclick="printBill()">طباعة الفاتورة</button>
@@ -169,9 +257,11 @@
     function addItem() {
       const product = document.getElementById('product').value;
       const price = parseFloat(document.getElementById('price').value);
+      const number = document.getElementById('number').value;
+      const address = document.getElementById('address').value;
   
       if (product && !isNaN(price) && price > 0) {
-        items.push({ product, price });
+        items.push({ product, price, number, address });
         updateItemList();
       } else {
         alert('الرجاء إدخال منتج وسعر صحيح.');
@@ -210,24 +300,29 @@
       const deliveryCost = parseFloat(document.getElementById('delivery').value) || 0;
       const totalAmount = items.reduce((sum, item) => sum + item.price, 0) + deliveryCost;
   
-      document.getElementById('total-delivery').textContent
-  = deliveryCost.toFixed(2);
-  document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
-  }
+      document.getElementById('total-delivery').textContent = deliveryCost.toFixed(2);
+      document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
   
-  // Add an event listener to the delivery input field
-  document.getElementById('delivery').addEventListener('input', updateTotalAmount);
+      // Update the printed number and address
+      document.getElementById('printed-number').textContent = items.length > 0 ? items[0].number : '';
+      document.getElementById('printed-address').textContent = items.length > 0 ? items[0].address : '';
+    }
   
-  function printBill() {
-  const printContent = document.getElementById('bill-container').innerHTML;
-  const originalContent = document.body.innerHTML;
+    // Add event listeners to the input fields
+    document.getElementById('delivery').addEventListener('input', updateTotalAmount);
+    document.getElementById('number').addEventListener('input', updateItemList);
+    document.getElementById('address').addEventListener('input', updateItemList);
   
-  document.body.innerHTML = printContent;
-  window.print();
+    function printBill() {
+      const printContent = document.getElementById('bill-container').innerHTML;
+      const originalContent = document.body.innerHTML;
   
-  document.body.innerHTML = originalContent;
-  updateItemList(); // Restore the original content and update the item list
-  }
+      document.body.innerHTML = printContent;
+      window.print();
+  
+      document.body.innerHTML = originalContent;
+      updateItemList(); // Restore the original content and update the item list
+    }
   </script>
 </body>
 </html>
